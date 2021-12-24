@@ -1,9 +1,19 @@
 import React from 'react'
 import { tile } from "../styles/style"
-
-export default function SearchItem({ icon, content, handleClick }) {
+import More from "./More";
+export default function SearchItem({ isInit, icon, content, showList, setShowList, handleClick, handleEdit, handleDel }) {
     return (
-        <div css={tile} onClick={ handleClick }>
+        <div css={tile} onClick={handleClick} >
+            {
+                isInit
+                    ? null
+                    : <More
+                        showList={showList}
+                        setShowList={setShowList}
+                        handleEdit={handleEdit}
+                        handleDel={handleDel}
+                    />
+            }
             <div className='tile-icon' >
                 <img src={icon}></img>
             </div>

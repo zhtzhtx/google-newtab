@@ -57,6 +57,7 @@ const mostVisited = css`
 `
 
 const tile = css`
+    position: relative;
     width: 112px;
     height: 112px;
     display: flex;
@@ -65,6 +66,9 @@ const tile = css`
     cursor: pointer;
     &:hover{
         background-color: #E8E8E9;
+        &>.moreBox{
+            display: block;
+        }
     }
     &>.tile-icon{
         width: 48px;
@@ -184,4 +188,39 @@ const dialog = css`
     }
 `
 
-export { container, main, inputWrapper, mostVisited, tile, mask, dialog }
+const moreBox = css`
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+`
+const selectList = css`
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 128px;
+    background: white;
+    box-shadow: rgb(158, 158, 158) 0px 2px 6px 0px;
+    outline: none;
+    padding: 8px 0;
+    z-index: 110;
+    &>.dropdown-item{
+        display: flex;
+        align-items: center;
+        color: #000;
+        font-size: 13px;
+        padding: 0 24px;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-sizing: border-box;
+        min-height: 32px;
+        text-align: start;
+        user-select: none;
+        &:hover{
+            background-color: #E8E8E9;
+        }
+    }
+`
+export { container, main, inputWrapper, mostVisited, tile, mask, dialog, moreBox, selectList }

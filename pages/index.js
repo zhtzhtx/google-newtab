@@ -8,6 +8,9 @@ import Dialog from "../components/Dialog";
 export default function Home() {
   const [isShow, setShow] = useState(false)
   const [dataList, setDataList] = useState([])
+  const [initalDialogData, setInitData] = useState(null)
+  const [showList, setShowList] = useState(false)
+
   const getFaviconByWebUrl = (data) => {
     let icon = ""
     if (typeof document !== "undefined") {
@@ -20,6 +23,10 @@ export default function Home() {
     }
     return icon;
   };
+  const showDialog = () => {
+    setShow(true)
+    setInitData(null)
+  }
   const addLink = (data) => {
     let newArr = [...dataList]
     let icon = getFaviconByWebUrl(data)
@@ -31,29 +38,61 @@ export default function Home() {
   const handleLink = (data) => {
     window.location.href = data.url;
   };
+  const handleDel = (index) => {
+    let newArr = dataList.filter((data, i) => i !== index)
+    window.localStorage.setItem("tabList", JSON.stringify(newArr))
+    setDataList(newArr)
+  }
+  const handleEdit = (index) => {
+    let data = dataList.find((data, i) => i === index)
+    setInitData(data)
+    setShow(true)
+  }
+  const isShowList = (flag) => {
+    setShowList(flag)
+  }
   useEffect(() => {
     const tabList = window.localStorage.getItem("tabList")
     const initalList = tabList ? JSON.parse(tabList) : []
     setDataList(initalList)
   }, [])
   return (
-    <div css={container}>
+    <div css={container} onClick={() => isShowList(false)}>
       <div css={main}>
         <img src="/google_logo.svg"></img>
         <SearchInput />
         <div css={mostVisited}>
           {dataList.map((data, index) => {
-            return <SearchItem icon={data.icon} content={data.name} key={index} handleClick={() => handleLink(data)} />
+            return <SearchItem
+              isInit={false}
+              icon={data.icon}
+              content={data.name}
+              key={index}
+              showList={showList}
+              setShowList={(flag) => setShowList(flag)}
+              handleClick={() => handleLink(data)}
+              handleDel={() => handleDel(index)}
+              handleEdit={() => handleEdit(index)}
+            />
           })
           }
-          <SearchItem icon="/add.svg" content="添加快捷方式" handleClick={() => setShow(true)} />
+          <SearchItem
+            isInit={true}
+            icon="/add.svg"
+            content="添加快捷方式"
+            handleClick={showDialog}
+          />
         </div>
         {
           isShow
             ?
             <>
               <Mask />
-              <Dialog setDialog={(flag) => setShow(flag)} addQuickLink={(data) => addLink(data)} />
+              <Dialog
+                initalData={initalDialogData}
+                setDialog={(flag) => setShow(flag)}
+                addQuickLink={(data) => addLink(data)}
+              />
             </>
             : null
         }

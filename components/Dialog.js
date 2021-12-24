@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { dialog } from "../styles/style"
 
-export default function Dialog({ setDialog, addQuickLink }) {
+export default function Dialog({ setDialog, addQuickLink, initalData }) {
     const [name, setName] = useState("")
     const [url, setUrl] = useState("")
     const emitData = () => {
@@ -10,6 +10,12 @@ export default function Dialog({ setDialog, addQuickLink }) {
         addQuickLink(data)
         setDialog(false)
     }
+    useEffect(() => {
+        if (initalData) {
+            setName(initalData.name)
+            setUrl(initalData.url)
+        }
+    }, [])
     return (
         <div css={dialog}>
             <div className='title'>添加快捷方式</div>
