@@ -1,13 +1,14 @@
 import React from 'react'
 import { tile } from "../styles/style"
 import More from "./More";
-export default function SearchItem({ isInit, icon, content, showList, setShowList, handleClick, handleEdit, handleDel }) {
+export default function SearchItem({ isInit, icon, content, index, showList, setShowList, handleClick, handleEdit, handleDel }) {
     return (
         <div css={tile} onClick={handleClick} >
             {
                 isInit
                     ? null
                     : <More
+                        index={index}
                         showList={showList}
                         setShowList={setShowList}
                         handleEdit={handleEdit}

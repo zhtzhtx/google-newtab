@@ -9,7 +9,7 @@ export default function Home() {
   const [isShow, setShow] = useState(false)
   const [dataList, setDataList] = useState([])
   const [initalDialogData, setInitData] = useState(null)
-  const [showList, setShowList] = useState(false)
+  const [showList, setShowList] = useState(null)
 
   const getFaviconByWebUrl = (data) => {
     let icon = ""
@@ -67,9 +67,10 @@ export default function Home() {
               isInit={false}
               icon={data.icon}
               content={data.name}
+              index={index} 
               key={index}
               showList={showList}
-              setShowList={(flag) => setShowList(flag)}
+              setShowList={(i) => setShowList(i)}
               handleClick={() => handleLink(data)}
               handleDel={() => handleDel(index)}
               handleEdit={() => handleEdit(index)}
